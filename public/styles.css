@@ -1000,6 +1000,12 @@ section {
     transition: opacity 1.2s ease-out, transform 1.2s ease-out;
 }
 
+/* Fallback: Show story intro if JavaScript is disabled or not loaded */
+.story-intro:not([data-scroll]) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .story-intro[data-scroll="fade-in"].visible {
     opacity: 1;
     transform: translateY(0);
@@ -1082,6 +1088,12 @@ section {
     opacity: 0;
     transform: translateY(80px) scale(0.95);
     transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fallback: Show story elements if JavaScript is disabled or not loaded */
+.story-step:not([data-scroll]) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 .story-final {
