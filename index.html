@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gosejohann GmbH - Fahrzeug- & Karosseriebau. Ihr Full-Service-Fahrzeugbauer für Reparaturen, Neubau, Sandstrahlen und Lackierung.">
+    <title>Gosejohann GmbH - Fahrzeug- & Karosseriebau</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <span class="logo-text">GOSEJOHANN</span>
+                    <span class="logo-subtitle">Fahrzeug- & Karosseriebau</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link">Start</a></li>
+                    <li><a href="#services" class="nav-link">Leistungen</a></li>
+                    <li><a href="#story" class="nav-link">Geschichte</a></li>
+                    <li><a href="#about" class="nav-link">Über uns</a></li>
+                    <li><a href="#contact" class="nav-link">Kontakt</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-image">
+                <img src="data:image/svg+xml,%3Csvg width='1920' height='1080' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='heroGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23heroGrad)'/%3E%3Cg transform='translate(400, 600)'%3E%3Crect x='0' y='0' width='800' height='200' rx='10' fill='rgba(230, 126, 34, 0.2)' opacity='0.6'/%3E%3Crect x='50' y='30' width='200' height='140' rx='5' fill='rgba(255, 255, 255, 0.1)'/%3E%3Crect x='300' y='50' width='450' height='120' rx='5' fill='rgba(255, 255, 255, 0.1)'/%3E%3Ccircle cx='150' cy='200' r='40' fill='rgba(255, 255, 255, 0.1)'/%3E%3Ccircle cx='650' cy='200' r='40' fill='rgba(255, 255, 255, 0.1)'/%3E%3C/g%3E%3Ccircle cx='200' cy='200' r='3' fill='rgba(230, 126, 34, 0.4)'/%3E%3Ccircle cx='1700' cy='300' r='4' fill='rgba(230, 126, 34, 0.3)'/%3E%3Ccircle cx='300' cy='800' r='2' fill='rgba(230, 126, 34, 0.5)'/%3E%3C/svg%3E" alt="Fahrzeugflotte">
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-particles"></div>
+        </div>
+        <div class="hero-content-wrapper">
+            <div class="hero-content">
+                <div class="hero-badge fade-in-up">Seit 1977</div>
+                <h1 class="hero-title fade-in-up">
+                    Ihre Flotte<br>
+                    <span class="highlight">... bei uns in den besten Händen.</span>
+                </h1>
+                <p class="hero-subtitle fade-in-up delay-1">
+                    Ihr Full-Service-Fahrzeugbauer vom ersten Konzept bis zum fertiggestellten Fahrzeug
+                </p>
+                <div class="hero-buttons fade-in-up delay-2">
+                    <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
+                    <a href="#services" class="btn btn-secondary">Unsere Leistungen</a>
+                </div>
+            </div>
+            <div class="hero-animation">
+                <svg viewBox="0 0 800 400" class="truck-animation">
+                    <!-- Halle -->
+                    <rect x="0" y="150" width="800" height="250" fill="rgba(255, 255, 255, 0.1)" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+                    <rect x="0" y="150" width="800" height="50" fill="rgba(255, 255, 255, 0.15)"/>
+                    <!-- LKW (kaputt rein) -->
+                    <g class="truck truck-broken" id="truck-broken">
+                        <!-- Fahrerhaus -->
+                        <rect x="50" y="320" width="80" height="60" rx="5" fill="#2c4a6b" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+                        <rect x="60" y="330" width="20" height="30" fill="#1e3a5f"/>
+                        <rect x="90" y="330" width="30" height="30" fill="#1e3a5f"/>
+                        <!-- Ladefläche mit Dellen -->
+                        <rect x="130" y="320" width="120" height="60" fill="#2c4a6b" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+                        <path d="M 140 330 Q 150 320 160 330" stroke="#e67e22" stroke-width="3" fill="none"/>
+                        <path d="M 180 335 Q 190 325 200 335" stroke="#e67e22" stroke-width="3" fill="none"/>
+                        <path d="M 220 330 Q 230 320 240 330" stroke="#e67e22" stroke-width="3" fill="none"/>
+                        <!-- Räder -->
+                        <circle cx="80" cy="390" r="20" fill="#1e3a5f"/>
+                        <circle cx="80" cy="390" r="12" fill="#333"/>
+                        <circle cx="180" cy="390" r="20" fill="#1e3a5f"/>
+                        <circle cx="180" cy="390" r="12" fill="#333"/>
+                        <circle cx="240" cy="390" r="20" fill="#1e3a5f"/>
+                        <circle cx="240" cy="390" r="12" fill="#333"/>
+                    </g>
+                    <!-- LKW (heil raus) -->
+                    <g class="truck truck-fixed" id="truck-fixed">
+                        <!-- Fahrerhaus -->
+                        <rect x="550" y="320" width="80" height="60" rx="5" fill="#2c4a6b" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+                        <rect x="560" y="330" width="20" height="30" fill="#1e3a5f"/>
+                        <rect x="590" y="330" width="30" height="30" fill="#1e3a5f"/>
+                        <!-- Ladefläche (glatt) -->
+                        <rect x="630" y="320" width="120" height="60" fill="#2c4a6b" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+                        <rect x="635" y="325" width="110" height="50" fill="#0052a5" opacity="0.3"/>
+                        <!-- Räder -->
+                        <circle cx="580" cy="390" r="20" fill="#1e3a5f"/>
+                        <circle cx="580" cy="390" r="12" fill="#333"/>
+                        <circle cx="680" cy="390" r="20" fill="#1e3a5f"/>
+                        <circle cx="680" cy="390" r="12" fill="#333"/>
+                        <circle cx="740" cy="390" r="20" fill="#1e3a5f"/>
+                        <circle cx="740" cy="390" r="12" fill="#333"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up">
+                    <div class="service-image">
+                        <img src="data:image/svg+xml,%3Csvg width='800' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='repGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23repGrad)'/%3E%3Cg transform='translate(100, 200)'%3E%3Crect x='0' y='0' width='600' height='150' rx='8' fill='rgba(230, 126, 34, 0.3)'/%3E%3Crect x='50' y='20' width='120' height='110' rx='4' fill='rgba(255, 255, 255, 0.2)'/%3E%3Crect x='200' y='40' width='350' height='90' rx='4' fill='rgba(255, 255, 255, 0.2)'/%3E%3Ccircle cx='150' cy='150' r='30' fill='rgba(255, 255, 255, 0.15)'/%3E%3Ccircle cx='500' cy='150' r='30' fill='rgba(255, 255, 255, 0.15)'/%3E%3Crect x='650' y='50' width='80' height='8' rx='4' fill='rgba(230, 126, 34, 0.8)' transform='rotate(45 690 54)'/%3E%3C/g%3E%3C/svg%3E" alt="Reparaturen">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-icon">🚛</div>
+                        <h3>Reparaturen & Unfallschäden</h3>
+                        <p>Beseitigung von Unfallschäden an allen Fahrzeugtypen. Kostengünstig, schnellstmöglich und hundertprozentig.</p>
+                        <ul class="service-list">
+                            <li>Wechsel-/Kühlkoffer-Reparaturen & Umbau</li>
+                            <li>Unfallschadenbeseitigung</li>
+                            <li>Karosserie- und Richtarbeiten</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-delay="100">
+                    <div class="service-image">
+                        <img src="data:image/svg+xml,%3Csvg width='800' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='aufGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23aufGrad)'/%3E%3Cg transform='translate(150, 150)'%3E%3Crect x='0' y='0' width='500' height='300' rx='5' fill='rgba(230, 126, 34, 0.25)' stroke='rgba(230, 126, 34, 0.5)' stroke-width='2'/%3E%3Crect x='20' y='20' width='460' height='260' fill='rgba(255, 255, 255, 0.1)'/%3E%3Cline x1='50' y1='0' x2='50' y2='300' stroke='rgba(230, 126, 34, 0.4)' stroke-width='2'/%3E%3Cline x1='250' y1='0' x2='250' y2='300' stroke='rgba(230, 126, 34, 0.4)' stroke-width='2'/%3E%3Cline x1='450' y1='0' x2='450' y2='300' stroke='rgba(230, 126, 34, 0.4)' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E" alt="Fahrzeugaufbauten">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-icon">🔧</div>
+                        <h3>Fahrzeug- & Kofferaufbauten</h3>
+                        <p>Komplette Fahrzeug- und Kofferaufbauten. Neubau, Umbau oder Instandsetzung - wir sind Ihr Ansprechpartner.</p>
+                        <ul class="service-list">
+                            <li>Wechselkofferneubau</li>
+                            <li>Kühlkofferaufbauten</li>
+                            <li>Sattelauflieger-Koffer</li>
+                            <li>Plangestellaufbauten</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-delay="200">
+                    <div class="service-image">
+                        <img src="data:image/svg+xml,%3Csvg width='800' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='sondGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23sondGrad)'/%3E%3Cg transform='translate(100, 200)'%3E%3Crect x='0' y='0' width='600' height='180' rx='10' fill='rgba(230, 126, 34, 0.3)'/%3E%3Crect x='30' y='20' width='100' height='140' rx='4' fill='rgba(255, 255, 255, 0.2)'/%3E%3Crect x='150' y='40' width='420' height='120' rx='4' fill='rgba(255, 255, 255, 0.2)'/%3E%3Crect x='200' y='0' width='200' height='40' rx='4' fill='rgba(230, 126, 34, 0.5)'/%3E%3Ccircle cx='120' cy='180' r='35' fill='rgba(255, 255, 255, 0.15)'/%3E%3Ccircle cx='520' cy='180' r='35' fill='rgba(255, 255, 255, 0.15)'/%3E%3C/g%3E%3C/svg%3E" alt="Sonderfahrzeuge">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-icon">🚗</div>
+                        <h3>Sonderfahrzeuge</h3>
+                        <p>Neuaufbau Sonderfahrzeuge nach Ihren individuellen Anforderungen und Wünschen.</p>
+                        <ul class="service-list">
+                            <li>Individuelle Konzeption</li>
+                            <li>Planung & Konstruktion</li>
+                            <li>Umsetzung bis zur Fertigstellung</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-delay="300">
+                    <div class="service-image">
+                        <img src="data:image/svg+xml,%3Csvg width='800' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='sandGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23sandGrad)'/%3E%3Cg transform='translate(100, 250)'%3E%3Crect x='0' y='0' width='600' height='100' rx='5' fill='rgba(255, 255, 255, 0.2)'/%3E%3Ccircle cx='200' cy='50' r='3' fill='rgba(230, 126, 34, 0.6)'/%3E%3Ccircle cx='220' cy='45' r='2' fill='rgba(230, 126, 34, 0.5)'/%3E%3Ccircle cx='240' cy='55' r='2.5' fill='rgba(230, 126, 34, 0.6)'/%3E%3Ccircle cx='260' cy='40' r='2' fill='rgba(230, 126, 34, 0.5)'/%3E%3Ccircle cx='280' cy='60' r='3' fill='rgba(230, 126, 34, 0.6)'/%3E%3Ccircle cx='300' cy='45' r='2' fill='rgba(230, 126, 34, 0.5)'/%3E%3C/g%3E%3C/svg%3E" alt="Sandstrahlen">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-icon">💨</div>
+                        <h3>Sandstrahlen</h3>
+                        <p>Sandstrahlen von LKW-Chassis, Aufbauten und Metallteilen für dauerhaften Korrosionsschutz.</p>
+                        <ul class="service-list">
+                            <li>LKW-Chassis</li>
+                            <li>PKW-Karosserien</li>
+                            <li>Container & Rahmen</li>
+                            <li>Stahlbauteile</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-delay="400">
+                    <div class="service-image">
+                        <img src="data:image/svg+xml,%3Csvg width='800' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='lackGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23lackGrad)'/%3E%3Cg transform='translate(150, 200)'%3E%3Crect x='0' y='0' width='500' height='200' rx='8' fill='rgba(230, 126, 34, 0.4)'/%3E%3Crect x='40' y='30' width='100' height='140' rx='4' fill='rgba(255, 255, 255, 0.25)'/%3E%3Crect x='160' y='50' width='300' height='120' rx='4' fill='rgba(255, 255, 255, 0.25)'/%3E%3Cellipse cx='300' cy='100' rx='150' ry='80' fill='rgba(255, 255, 255, 0.1)'/%3E%3C/g%3E%3C/svg%3E" alt="Lackierung">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-icon">🎨</div>
+                        <h3>Lackierung & Beschichtung</h3>
+                        <p>Lackierungen, Versiegelungen, Beschichtungen & Beschriftungen für Langzeit-Korrosionsschutz.</p>
+                        <ul class="service-list">
+                            <li>Grundierung & Versiegelung</li>
+                            <li>Lackierung</li>
+                            <li>Beschichtung</li>
+                            <li>Beschriftungen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-delay="500">
+                    <div class="service-image">
+                        <img src="data:image/svg+xml,%3Csvg width='800' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='umbGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e3a5f;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232c4a6b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23umbGrad)'/%3E%3Cg transform='translate(100, 200)'%3E%3Crect x='0' y='0' width='600' height='200' rx='8' fill='rgba(230, 126, 34, 0.3)'/%3E%3Crect x='50' y='30' width='120' height='140' rx='4' fill='rgba(255, 255, 255, 0.2)'/%3E%3Crect x='200' y='50' width='350' height='120' rx='4' fill='rgba(255, 255, 255, 0.2)'/%3E%3Crect x='580' y='80' width='60' height='8' rx='4' fill='rgba(230, 126, 34, 0.7)' transform='rotate(30 610 84)'/%3E%3C/g%3E%3C/svg%3E" alt="Umbau">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-icon">⚙️</div>
+                        <h3>Umbau & Instandsetzung</h3>
+                        <p>Verlängerung, Verkürzung, Höher- oder Tieferlegung von Wechsel- und Kühlkoffern.</p>
+                        <ul class="service-list">
+                            <li>Chassivarlängerung</li>
+                            <li>Höher-/Tieferlegung</li>
+                            <li>Ladebordwand-Neubau</li>
+                            <li>Hilfsrahmen-Neubau</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item" data-aos="fade-right">
+                    <div class="feature-number">12.000</div>
+                    <div class="feature-label">qm Stellflächen</div>
+                </div>
+                <div class="feature-item" data-aos="fade-up">
+                    <div class="feature-number">1977</div>
+                    <div class="feature-label">Gegründet</div>
+                </div>
+                <div class="feature-item" data-aos="fade-up">
+                    <div class="feature-number">100%</div>
+                    <div class="feature-label">Qualität</div>
+                </div>
+                <div class="feature-item" data-aos="fade-left">
+                    <div class="feature-number">24/7</div>
+                    <div class="feature-label">Service</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="story">
+        <div class="story-container">
+            <div class="story-intro" data-scroll="fade-in">
+                <h2 class="story-title">Unsere Geschichte</h2>
+                <p class="story-subtitle">Von der Vision zur Realität - Eine Reise durch fast 50 Jahre Exzellenz</p>
+            </div>
+
+            <div class="story-timeline">
+                <div class="story-line"></div>
+                
+                <div class="story-step" data-scroll="fade-in-up" data-delay="0">
+                    <div class="story-marker">
+                        <div class="story-year">1977</div>
+                        <div class="story-icon">🚀</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Der Anfang</h3>
+                        <p>Hartmut Gosejohann gründet die Karosserie- und Fahrzeugbau Gosejohann in Rietberg-Mastholte. Mit einer Vision: Qualität, Zuverlässigkeit und Kundenzufriedenheit.</p>
+                    </div>
+                </div>
+
+                <div class="story-step" data-scroll="fade-in-up" data-delay="200">
+                    <div class="story-marker">
+                        <div class="story-year">1984</div>
+                        <div class="story-icon">🏭</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Wachstum</h3>
+                        <p>Umzug nach Rietberg ins Industriegebiet Tenge. Mehr Platz, mehr Möglichkeiten, mehr Potenzial für die Zukunft.</p>
+                    </div>
+                </div>
+
+                <div class="story-step" data-scroll="fade-in-up" data-delay="400">
+                    <div class="story-marker">
+                        <div class="story-year">1989</div>
+                        <div class="story-icon">💨</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Innovation</h3>
+                        <p>Bau der Sandstrahlanlage. Ein Meilenstein für dauerhaften Korrosionsschutz und höchste Qualitätsstandards.</p>
+                    </div>
+                </div>
+
+                <div class="story-step" data-scroll="fade-in-up" data-delay="600">
+                    <div class="story-marker">
+                        <div class="story-year">1998</div>
+                        <div class="story-icon">🔧</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Erweiterung</h3>
+                        <p>Erweiterung des Reparaturbetriebes. Mehr Kapazität für unsere wachsende Kundschaft.</p>
+                    </div>
+                </div>
+
+                <div class="story-step" data-scroll="fade-in-up" data-delay="800">
+                    <div class="story-marker">
+                        <div class="story-year">2000</div>
+                        <div class="story-icon">🏗️</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Neubau</h3>
+                        <p>Neubau der großen Montagehalle. Modernste Ausstattung für effiziente Produktion und höchste Qualität.</p>
+                    </div>
+                </div>
+
+                <div class="story-step" data-scroll="fade-in-up" data-delay="1000">
+                    <div class="story-marker">
+                        <div class="story-year">2007</div>
+                        <div class="story-icon">📈</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Expansion</h3>
+                        <p>Erweiterung auf 12.000 qm Stellflächen. Optimiert für die Instandsetzung großer Flotten.</p>
+                    </div>
+                </div>
+
+                <div class="story-step story-final" data-scroll="fade-in-up" data-delay="1200">
+                    <div class="story-marker">
+                        <div class="story-year">Heute</div>
+                        <div class="story-icon">🚛</div>
+                    </div>
+                    <div class="story-content">
+                        <h3>Die Zukunft</h3>
+                        <p>Ein hochmotiviertes Team aus bestens ausgebildeten Mitarbeitern und modernster Technik. Ihre Flotte ... bei uns in den besten Händen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-up">
+                    <h2 class="section-title">Ihr Fahrzeug und Ihre Karosserie</h2>
+                    <p>
+                        Wir sind Ihr Full-Service-Fahrzeugbauer vom ersten Konzept, der Planung, der Konstruktion und Umsetzung bis zu Ihrem fertiggestellten Fahrzeug.
+                    </p>
+                    <p>
+                        Und das 'Alles aus einer Hand' - kompetent, terminsicher und zuverlässig - was uns unsere Kunden immer wieder gerne bestätigen. Durch unsere optimierten Arbeitsprozesse garantieren wir Ihnen ein Höchstmaß bezüglich Qualität und Quantität.
+                    </p>
+                    <p>
+                        Wir verfügen über großzügige Stellflächen optimiert für die Instandsetzung großer Flotten. Und nicht zuletzt bedienen wir aufgrund unserer günstigen geografischen Lage dicht an der A2/A33 und im Herzen Deutschlands, Speditionen und Führunternehmen in der Nord-Süd- und West-Ost-Achse gleichermaßen.
+                    </p>
+                    <div class="about-benefits-wrapper">
+                        <div class="about-benefits">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Hol- und Bringservice deutschlandweit</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Timeline-Management</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Kostenvoranschläge vor Ort</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Schadensaufnahme vor Ort</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Verkauf von Nutzfahrzeugen</span>
+                            </div>
+                        </div>
+                        <div class="about-image-section">
+                            <div class="about-image-wrapper">
+                                <img src="/images/lkw.png" alt="LKW" class="about-image" onerror="this.src='/images/lklw.png'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Kontakt</h2>
+                <p class="section-subtitle">Wir freuen uns auf Ihre Anfrage</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Adresse</h4>
+                            <p>Gosejohann GmbH<br>
+                            Industriestraße 22<br>
+                            D-33397 Rietberg</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Telefon</h4>
+                            <p>
+                                <a href="tel:+49524477818">+49 (0) 52 44 / 7 78 18</a><br>
+                                <a href="tel:+491718514963">+49 (0) 17 1 / 8 51 49 63</a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📠</div>
+                        <div class="contact-details">
+                            <h4>Fax</h4>
+                            <p><a href="tel:+49524478529">+49 (0) 52 44 / 7 85 29</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>E-Mail</h4>
+                            <p><a href="mailto:Info@Fahrzeugbau-Gosejohann.de">Info@Fahrzeugbau-Gosejohann.de</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-details">
+                            <h4>Internet</h4>
+                            <p><a href="http://www.Fahrzeugbau-Gosejohann.de" target="_blank">www.Fahrzeugbau-Gosejohann.de</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-wrapper" data-aos="fade-left">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Betreff *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Nachricht *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Gosejohann GmbH</h4>
+                    <p>Fahrzeug- & Karosseriebau</p>
+                    <p>Ihre Flotte ... bei uns in den besten Händen.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Leistungen</h4>
+                    <ul>
+                        <li><a href="#services">Reparaturen</a></li>
+                        <li><a href="#services">Neubau & Umbau</a></li>
+                        <li><a href="#services">Sandstrahlen</a></li>
+                        <li><a href="#services">Lackierung</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Kontakt</h4>
+                    <p>Industriestraße 22<br>D-33397 Rietberg</p>
+                    <p>Tel: +49 (0) 52 44 / 7 78 18</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Gosejohann GmbH. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
