@@ -141,43 +141,6 @@ window.addEventListener('scroll', updateActiveNavLink);
 
 /* Service card hover: styled in CSS only */
 
-// Counter animation for feature numbers
-function animateCounter(element, target, duration = 2000) {
-    const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
-        }
-    }, 16);
-}
-
-// Observe feature numbers and animate them
-const featureNumbers = document.querySelectorAll('.feature-number');
-const featureObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-            const text = entry.target.textContent;
-            const number = parseInt(text.replace(/\D/g, ''));
-            
-            if (!isNaN(number) && number > 100) {
-                entry.target.classList.add('animated');
-                animateCounter(entry.target, number);
-            }
-        }
-    });
-}, { threshold: 0.5 });
-
-featureNumbers.forEach(number => {
-    featureObserver.observe(number);
-});
-
 // Add loading animation
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
@@ -352,8 +315,53 @@ const heroStage = document.getElementById('heroStage');
 const heroSplash = document.getElementById('heroSplash');
 const heroContent = heroStage?.querySelector('.hero-content');
 const heroBackground = heroStage?.querySelector('.hero-background');
-const HERO_OPEN_SCROLL = 420;
 let scrollEffectsTicking = false;
+
+function getHeroConfig() {
+    const w = window.innerWidth;
+
+    if (w <= 480) {
+        return {
+            openScroll: 260,
+            scaleBoost: 0.05,
+            translateIn: 36,
+            translateOut: 28,
+            splashY: -18,
+            splashBlur: 8,
+        };
+    }
+
+    if (w <= 768) {
+        return {
+            openScroll: 300,
+            scaleBoost: 0.06,
+            translateIn: 42,
+            translateOut: 36,
+            splashY: -22,
+            splashBlur: 10,
+        };
+    }
+
+    if (w <= 992) {
+        return {
+            openScroll: 360,
+            scaleBoost: 0.07,
+            translateIn: 48,
+            translateOut: 42,
+            splashY: -24,
+            splashBlur: 12,
+        };
+    }
+
+    return {
+        openScroll: 420,
+        scaleBoost: 0.08,
+        translateIn: 52,
+        translateOut: 48,
+        splashY: -28,
+        splashBlur: 14,
+    };
+}
 
 function smoothStep(t) {
     const x = clampScroll(t, 0, 1);
@@ -369,7 +377,7 @@ function updateHeroStage() {
 
     const scrollY = window.scrollY;
 
-    if (prefersReducedMotion || window.innerWidth <= 992) {
+    if (prefersReducedMotion) {
         if (heroSplash) {
             heroSplash.style.setProperty('--splash-opacity', '0');
             heroSplash.classList.add('is-dissolved');
@@ -383,9 +391,10 @@ function updateHeroStage() {
         return;
     }
 
+    const heroCfg = getHeroConfig();
     const vh = window.innerHeight;
     const track = Math.max(heroSection.offsetHeight - vh, 1);
-    const openP = clampScroll(scrollY / HERO_OPEN_SCROLL, 0, 1);
+    const openP = clampScroll(scrollY / heroCfg.openScroll, 0, 1);
     const trackP = clampScroll(scrollY / track, 0, 1);
 
     /* Eine Kurve: Splash löst sich, Bühne wächst, Text kommt – überlappend */
@@ -398,14 +407,14 @@ function updateHeroStage() {
         const splashStay = 1 - splashOut;
         heroSplash.style.setProperty('--splash-opacity', String(splashStay));
         heroSplash.style.setProperty('--splash-scale', String(1 - splashOut * 0.06));
-        heroSplash.style.setProperty('--splash-y', `${splashOut * -28}px`);
-        heroSplash.style.setProperty('--splash-blur', `${splashOut * 14}px`);
+        heroSplash.style.setProperty('--splash-y', `${splashOut * heroCfg.splashY}px`);
+        heroSplash.style.setProperty('--splash-blur', `${splashOut * heroCfg.splashBlur}px`);
         heroSplash.classList.toggle('is-dissolved', splashOut >= 0.99);
     }
 
-    const scale = 1 + stageOpen * 0.08 - exitP * 0.06;
-    const translateY = (1 - stageOpen) * 52 - exitP * 48;
-    const bgY = (1 - stageOpen) * 28 + exitP * 24;
+    const scale = 1 + stageOpen * heroCfg.scaleBoost - exitP * (heroCfg.scaleBoost * 0.75);
+    const translateY = (1 - stageOpen) * heroCfg.translateIn - exitP * heroCfg.translateOut;
+    const bgY = (1 - stageOpen) * (heroCfg.translateIn * 0.54) + exitP * (heroCfg.translateOut * 0.5);
     const bgScale = 1.08 - stageOpen * 0.04 + exitP * 0.03;
 
     heroStage.style.setProperty('--hero-scale', String(scale));
@@ -496,7 +505,7 @@ function applyScrollTransform(el, animType, floatX, floatY, settled) {
     }
 }
 
-const STATIC_SCROLL_SECTIONS = ['#about', '#contact'];
+const STATIC_SCROLL_SECTIONS = ['#features', '#about', '#contact'];
 
 function initStaticSectionContent() {
     STATIC_SCROLL_SECTIONS.forEach((sectionId) => {
