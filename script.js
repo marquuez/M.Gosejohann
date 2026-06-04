@@ -323,9 +323,9 @@ function getHeroConfig() {
     if (w <= 480) {
         return {
             openScroll: 260,
-            scaleBoost: 0.05,
-            translateIn: 36,
-            translateOut: 28,
+            scaleBoost: 0.04,
+            translateIn: 20,
+            translateOut: 22,
             splashY: -18,
             splashBlur: 8,
         };
@@ -334,9 +334,9 @@ function getHeroConfig() {
     if (w <= 768) {
         return {
             openScroll: 300,
-            scaleBoost: 0.06,
-            translateIn: 42,
-            translateOut: 36,
+            scaleBoost: 0.05,
+            translateIn: 24,
+            translateOut: 28,
             splashY: -22,
             splashBlur: 10,
         };
@@ -345,9 +345,9 @@ function getHeroConfig() {
     if (w <= 992) {
         return {
             openScroll: 360,
-            scaleBoost: 0.07,
-            translateIn: 48,
-            translateOut: 42,
+            scaleBoost: 0.06,
+            translateIn: 28,
+            translateOut: 32,
             splashY: -24,
             splashBlur: 12,
         };
@@ -430,6 +430,10 @@ function updateHeroStage() {
         heroContent.style.setProperty('--hero-content-opacity', String(contentOpen));
     }
 
+    const isCompactHero = window.innerWidth <= 992;
+    const revealBase = isCompactHero ? 18 : 44;
+    const revealStep = isCompactHero ? 6 : 12;
+
     heroSection.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
         const order = parseInt(el.dataset.revealOrder, 10) || 0;
         const itemStart = 0.38 + order * 0.09;
@@ -437,7 +441,7 @@ function updateHeroStage() {
 
         if (itemP > 0.01) {
             el.classList.add('is-revealed');
-            const floatY = (1 - itemP) * (44 + order * 12);
+            const floatY = (1 - itemP) * (revealBase + order * revealStep);
             el.style.setProperty('--reveal-y', `${floatY}px`);
             el.style.setProperty('--reveal-opacity', String(0.1 + itemP * 0.9));
             el.classList.toggle('is-settled', itemP >= 0.98);
