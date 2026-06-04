@@ -1,23 +1,32 @@
 // Mobile Menu Toggle
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
+const navBackdrop = document.getElementById('navBackdrop');
 const navLinks = document.querySelectorAll('.nav-link');
 
 function closeMobileMenu() {
+    if (!navMenu || !mobileMenuToggle) return;
     navMenu.classList.remove('active');
     mobileMenuToggle.classList.remove('active');
+    navBackdrop?.classList.remove('is-visible');
     document.body.classList.remove('menu-open');
     mobileMenuToggle.setAttribute('aria-expanded', 'false');
+    navBackdrop?.setAttribute('aria-hidden', 'true');
 }
 
 function openMobileMenu() {
+    if (!navMenu || !mobileMenuToggle) return;
     navMenu.classList.add('active');
     mobileMenuToggle.classList.add('active');
+    navBackdrop?.classList.add('is-visible');
     document.body.classList.add('menu-open');
     mobileMenuToggle.setAttribute('aria-expanded', 'true');
+    navBackdrop?.setAttribute('aria-hidden', 'false');
 }
 
 function toggleMobileMenu() {
+    if (!navMenu || !mobileMenuToggle) return;
+
     if (navMenu.classList.contains('active')) {
         closeMobileMenu();
     } else {
@@ -25,14 +34,20 @@ function toggleMobileMenu() {
     }
 }
 
-mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+if (navBackdrop) {
+    navBackdrop.addEventListener('click', closeMobileMenu);
+}
 
 navLinks.forEach(link => {
     link.addEventListener('click', closeMobileMenu);
 });
 
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 992) {
         closeMobileMenu();
     }
 });
@@ -416,9 +431,17 @@ function updateHeroStage() {
     const translateY = (1 - stageOpen) * heroCfg.translateIn - exitP * heroCfg.translateOut;
     const bgY = (1 - stageOpen) * (heroCfg.translateIn * 0.54) + exitP * (heroCfg.translateOut * 0.5);
     const bgScale = 1.08 - stageOpen * 0.04 + exitP * 0.03;
+    const useStageTransform = window.innerWidth > 992;
 
-    heroStage.style.setProperty('--hero-scale', String(scale));
-    heroStage.style.setProperty('--hero-y', `${translateY}px`);
+    if (useStageTransform) {
+        heroStage.style.setProperty('--hero-scale', String(scale));
+        heroStage.style.setProperty('--hero-y', `${translateY}px`);
+    } else {
+        heroStage.style.setProperty('--hero-scale', '1');
+        heroStage.style.setProperty('--hero-y', '0');
+        heroStage.style.removeProperty('transform');
+    }
+
     heroStage.style.setProperty('--hint-opacity', String(clampScroll(1 - openP * 1.15, 0, 1)));
 
     if (heroBackground) {
