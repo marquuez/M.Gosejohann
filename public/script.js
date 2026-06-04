@@ -43,21 +43,22 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Navbar scroll effect
+// Navbar: ab Abschnitt „Leistungen“ Website-Blau
 const navbar = document.getElementById('navbar');
-let lastScroll = 0;
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
+function updateNavbarTheme() {
+    if (!navbar) return;
+
+    const services = document.getElementById('services');
+    if (!services) return;
+
+    const navHeight =
+        parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 72;
+    const servicesStart = services.offsetTop - navHeight;
+    const showBlueNav = window.scrollY >= servicesStart;
+
+    navbar.classList.toggle('navbar--past-hero', showBlueNav);
+}
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -73,31 +74,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
-});
-
-// Intersection Observer for scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('aos-animate');
-            
-            // Add stagger effect for service cards
-            if (entry.target.classList.contains('service-card')) {
-                const delay = entry.target.getAttribute('data-delay') || 0;
-                entry.target.style.transitionDelay = `${delay}ms`;
-            }
-        }
-    });
-}, observerOptions);
-
-// Observe all elements with data-aos attribute
-document.querySelectorAll('[data-aos]').forEach(el => {
-    observer.observe(el);
 });
 
 // Form submission handler
@@ -162,6 +138,8 @@ function updateActiveNavLink() {
 }
 
 window.addEventListener('scroll', updateActiveNavLink);
+
+/* Service card hover: styled in CSS only */
 
 // Counter animation for feature numbers
 function animateCounter(element, target, duration = 2000) {
@@ -301,97 +279,469 @@ const debouncedScroll = debounce(() => {
 
 window.addEventListener('scroll', debouncedScroll);
 
-// Story Scroll Animations
-const isMobileStory = () => window.matchMedia('(max-width: 768px)').matches;
+// Story – Punkt an Viewport-Mitte, aktiver Schritt = Karte in der Mitte
+const storySection = document.getElementById('story');
+const storyTimeline = document.querySelector('.story-timeline');
+const storyLine = document.querySelector('.story-line');
+const storyLineDot = document.querySelector('.story-line-dot');
+const storySteps = document.querySelectorAll('.story-step');
 
-const storyObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const isFinal = entry.target.classList.contains('story-final');
-            const delay = isFinal ? 0 : (parseInt(entry.target.getAttribute('data-delay'), 10) || 0);
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, delay);
+function updateStoryTimeline() {
+    if (!storyTimeline || !storySteps.length) return;
+
+    const viewportCenter = window.innerHeight * 0.5;
+    const timelineRect = storyTimeline.getBoundingClientRect();
+
+    if (storyLineDot && storyLine) {
+        const lineRect = storyLine.getBoundingClientRect();
+        const lineHeight = lineRect.height;
+        const dotY = clampScroll(viewportCenter - lineRect.top, 0, lineHeight);
+        const inStory =
+            viewportCenter >= timelineRect.top && viewportCenter <= timelineRect.bottom;
+
+        storyLineDot.style.setProperty('--story-dot-y', `${dotY}px`);
+        storyLine.classList.toggle('is-in-view', inStory);
+    }
+
+    let activeStep = null;
+    let minDist = Infinity;
+
+    storySteps.forEach((step) => {
+        const content = step.querySelector('.story-content');
+        if (!content) return;
+        const rect = content.getBoundingClientRect();
+        if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
+            activeStep = step;
         }
     });
-}, {
-    threshold: [0, 0.08, 0.2],
-    rootMargin: isMobileStory() ? '0px 0px 12% 0px' : '0px 0px -50px 0px'
-});
 
-function ensureStoryFinalVisible() {
-    const finalStep = document.querySelector('.story-final');
-    if (!finalStep || finalStep.classList.contains('visible')) return;
+    if (!activeStep) {
+        storySteps.forEach((step) => {
+            const content = step.querySelector('.story-content');
+            const target = content || step;
+            const rect = target.getBoundingClientRect();
+            const centerY = rect.top + rect.height * 0.5;
+            const dist = Math.abs(centerY - viewportCenter);
 
-    const rect = finalStep.getBoundingClientRect();
-    const inView = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+            if (dist < minDist) {
+                minDist = dist;
+                activeStep = step;
+            }
+        });
+    }
 
-    if (inView) {
-        finalStep.classList.add('visible');
+    storySteps.forEach((step) => {
+        step.classList.toggle('active', step === activeStep);
+    });
+
+    if (storySection) {
+        storySection.classList.toggle(
+            'story--timeline-active',
+            viewportCenter >= timelineRect.top && viewportCenter <= timelineRect.bottom
+        );
     }
 }
 
-window.addEventListener('load', ensureStoryFinalVisible);
-window.addEventListener('scroll', debounce(ensureStoryFinalVisible, 50), { passive: true });
-window.addEventListener('resize', ensureStoryFinalVisible);
+// —— Hero-Bühne & Scroll-Float (gesamte Website) ——
+function clampScroll(n, min, max) {
+    return Math.min(max, Math.max(min, n));
+}
 
-// Active step observer for highlighting - tracks all steps to find the most visible one
-const allSteps = document.querySelectorAll('.story-step');
-let activeStepObserver;
+const heroSection = document.getElementById('home');
+const heroStage = document.getElementById('heroStage');
+const heroSplash = document.getElementById('heroSplash');
+const heroContent = heroStage?.querySelector('.hero-content');
+const heroBackground = heroStage?.querySelector('.hero-background');
+const HERO_OPEN_SCROLL = 420;
+let scrollEffectsTicking = false;
 
-if (allSteps.length > 0) {
-    const activeStepObserverOptions = {
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-        rootMargin: isMobileStory() ? '-15% 0px -10% 0px' : '-30% 0px -30% 0px'
-    };
-    
-    activeStepObserver = new IntersectionObserver((entries) => {
-        // Track all intersection ratios
-        const stepRatios = new Map();
-        
-        entries.forEach(entry => {
-            stepRatios.set(entry.target, entry.intersectionRatio);
-        });
-        
-        // Find the step with the highest intersection ratio
-        let maxRatio = 0;
-        let mostVisibleStep = null;
-        
-        stepRatios.forEach((ratio, step) => {
-            if (ratio > maxRatio) {
-                maxRatio = ratio;
-                mostVisibleStep = step;
-            }
-        });
-        
-        // Remove active from all steps
-        allSteps.forEach(step => {
-            step.classList.remove('active');
-        });
-        
-        // Add active to the most visible step if it meets threshold
-        if (mostVisibleStep && maxRatio > 0.3) {
-            mostVisibleStep.classList.add('active');
+function smoothStep(t) {
+    const x = clampScroll(t, 0, 1);
+    return x * x * (3 - 2 * x);
+}
+
+function rangeProgress(value, start, end) {
+    return smoothStep((value - start) / (end - start));
+}
+
+function updateHeroStage() {
+    if (!heroSection || !heroStage) return;
+
+    const scrollY = window.scrollY;
+
+    if (prefersReducedMotion || window.innerWidth <= 992) {
+        if (heroSplash) {
+            heroSplash.style.setProperty('--splash-opacity', '0');
+            heroSplash.classList.add('is-dissolved');
         }
-    }, activeStepObserverOptions);
-    
-    // Observe all story steps for active state
-    allSteps.forEach(step => {
-        activeStepObserver.observe(step);
+        if (heroContent) heroContent.style.setProperty('--hero-content-opacity', '1');
+        heroStage.style.setProperty('--hero-scale', '1');
+        heroStage.style.setProperty('--hero-y', '0');
+        heroSection.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
+            el.classList.add('is-revealed', 'is-settled');
+        });
+        return;
+    }
+
+    const vh = window.innerHeight;
+    const track = Math.max(heroSection.offsetHeight - vh, 1);
+    const openP = clampScroll(scrollY / HERO_OPEN_SCROLL, 0, 1);
+    const trackP = clampScroll(scrollY / track, 0, 1);
+
+    /* Eine Kurve: Splash löst sich, Bühne wächst, Text kommt – überlappend */
+    const splashOut = rangeProgress(openP, 0, 0.42);
+    const stageOpen = rangeProgress(openP, 0.06, 0.58);
+    const contentOpen = rangeProgress(openP, 0.36, 0.78);
+    const exitP = rangeProgress(trackP, 0.52, 0.92);
+
+    if (heroSplash) {
+        const splashStay = 1 - splashOut;
+        heroSplash.style.setProperty('--splash-opacity', String(splashStay));
+        heroSplash.style.setProperty('--splash-scale', String(1 - splashOut * 0.06));
+        heroSplash.style.setProperty('--splash-y', `${splashOut * -28}px`);
+        heroSplash.style.setProperty('--splash-blur', `${splashOut * 14}px`);
+        heroSplash.classList.toggle('is-dissolved', splashOut >= 0.99);
+    }
+
+    const scale = 1 + stageOpen * 0.08 - exitP * 0.06;
+    const translateY = (1 - stageOpen) * 52 - exitP * 48;
+    const bgY = (1 - stageOpen) * 28 + exitP * 24;
+    const bgScale = 1.08 - stageOpen * 0.04 + exitP * 0.03;
+
+    heroStage.style.setProperty('--hero-scale', String(scale));
+    heroStage.style.setProperty('--hero-y', `${translateY}px`);
+    heroStage.style.setProperty('--hint-opacity', String(clampScroll(1 - openP * 1.15, 0, 1)));
+
+    if (heroBackground) {
+        heroBackground.style.setProperty('--hero-bg-y', `${bgY}px`);
+        heroBackground.style.setProperty('--hero-bg-scale', String(bgScale));
+    }
+
+    if (heroContent) {
+        heroContent.style.setProperty('--hero-content-opacity', String(contentOpen));
+    }
+
+    heroSection.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
+        const order = parseInt(el.dataset.revealOrder, 10) || 0;
+        const itemStart = 0.38 + order * 0.09;
+        const itemP = rangeProgress(openP, itemStart, itemStart + 0.28);
+
+        if (itemP > 0.01) {
+            el.classList.add('is-revealed');
+            const floatY = (1 - itemP) * (44 + order * 12);
+            el.style.setProperty('--reveal-y', `${floatY}px`);
+            el.style.setProperty('--reveal-opacity', String(0.1 + itemP * 0.9));
+            el.classList.toggle('is-settled', itemP >= 0.98);
+        } else {
+            el.classList.remove('is-revealed', 'is-settled');
+            el.style.removeProperty('--reveal-y');
+            el.style.removeProperty('--reveal-opacity');
+        }
     });
 }
 
-// Observe all story elements
-document.querySelectorAll('[data-scroll]').forEach(el => {
-    storyObserver.observe(el);
+const SCROLL_ANIM_SELECTORS = [
+    { selector: '.section-header', aos: 'fade-up' },
+    { selector: '.story-intro', aos: 'fade-up' },
+    { selector: '.story-step', aos: 'fade-up' },
+    { selector: '.footer-section', aos: 'fade-up' },
+    { selector: '.footer-bottom', aos: 'fade-up' }
+];
+
+const scrollRevealDelays = new WeakMap();
+
+function getScrollAnimType(el) {
+    const scroll = el.getAttribute('data-scroll') || '';
+    if (scroll.includes('left')) return 'fade-left';
+    if (scroll.includes('right')) return 'fade-right';
+    return el.getAttribute('data-aos') || 'fade-up';
+}
+
+function markScrollVisible(el) {
+    if (scrollRevealDelays.has(el)) return;
+
+    const delay = parseInt(el.getAttribute('data-delay'), 10) || 0;
+    scrollRevealDelays.set(el, true);
+
+    const apply = () => {
+        el.classList.add('scroll-visible', 'aos-animate');
+        if (el.hasAttribute('data-scroll')) {
+            el.classList.add('visible');
+        }
+        const d = el.getAttribute('data-delay');
+        if (d) {
+            el.style.transitionDelay = `${d}ms`;
+        }
+    };
+
+    if (delay > 0) {
+        setTimeout(apply, delay);
+    } else {
+        apply();
+    }
+}
+
+function applyScrollTransform(el, animType, floatX, floatY, settled) {
+    if (settled) {
+        el.style.transform = 'translate(0, 0)';
+        return;
+    }
+
+    if (animType === 'fade-left') {
+        el.style.transform = `translate(${-22 + floatX}px, ${floatY * 0.3}px)`;
+    } else if (animType === 'fade-right') {
+        el.style.transform = `translate(${22 + floatX}px, ${floatY * 0.3}px)`;
+    } else {
+        el.style.transform = `translateY(${26 + floatY}px)`;
+    }
+}
+
+const STATIC_SCROLL_SECTIONS = ['#about', '#contact'];
+
+function initStaticSectionContent() {
+    STATIC_SCROLL_SECTIONS.forEach((sectionId) => {
+        const section = document.querySelector(sectionId);
+        if (!section) return;
+
+        section.querySelectorAll(
+            '[data-scroll-float], [data-aos], [data-scroll], .scroll-animate'
+        ).forEach((el) => {
+            el.removeAttribute('data-scroll-float');
+            el.removeAttribute('data-aos');
+            el.removeAttribute('data-scroll');
+            el.classList.remove(
+                'scroll-animate',
+                'scroll-visible',
+                'aos-animate',
+                'is-floating',
+                'is-settled',
+                'visible'
+            );
+            el.style.transform = '';
+            el.style.transitionDelay = '';
+        });
+    });
+}
+
+function isInStaticScrollSection(el) {
+    return STATIC_SCROLL_SECTIONS.some((id) => el.closest(id));
+}
+
+function initSiteScrollAnimations() {
+    initStaticSectionContent();
+
+    SCROLL_ANIM_SELECTORS.forEach(({ selector, aos }) => {
+        document.querySelectorAll(selector).forEach((el, index) => {
+            if (el.closest('.hero') || isInStaticScrollSection(el)) return;
+            if (
+                el.hasAttribute('data-scroll-float') ||
+                el.hasAttribute('data-aos') ||
+                el.hasAttribute('data-scroll')
+            ) {
+                return;
+            }
+            el.classList.add('scroll-animate');
+            el.setAttribute('data-scroll-float', '');
+            el.setAttribute('data-aos', aos);
+            if (!el.hasAttribute('data-delay')) {
+                el.setAttribute('data-delay', String((index % 5) * 70));
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-aos]:not([data-scroll-float])').forEach((el) => {
+        if (!el.closest('.hero') && !isInStaticScrollSection(el)) {
+            el.setAttribute('data-scroll-float', '');
+        }
+    });
+
+    document.querySelectorAll('[data-scroll]:not([data-scroll-float])').forEach((el) => {
+        if (!isInStaticScrollSection(el)) {
+            el.setAttribute('data-scroll-float', '');
+        }
+    });
+}
+
+function getScrollAnimatedElements() {
+    return document.querySelectorAll(
+        '.scroll-animate, [data-scroll-float], [data-aos], [data-scroll]'
+    );
+}
+
+function updateScrollFloat() {
+    if (prefersReducedMotion) {
+        getScrollAnimatedElements().forEach((el) => {
+            if (el.closest('.hero') || isInStaticScrollSection(el)) return;
+            el.classList.add('scroll-visible', 'aos-animate', 'is-settled', 'visible');
+            el.style.transform = '';
+            el.style.opacity = '';
+        });
+        return;
+    }
+
+    const vh = window.innerHeight;
+    const triggerLine = vh * 0.9;
+    const settleZone = vh * 0.11;
+    const targetY = vh * 0.56;
+
+    getScrollAnimatedElements().forEach((el) => {
+        if (el.closest('.hero') || el.closest('#about') || el.hasAttribute('data-scroll-reveal')) {
+            return;
+        }
+
+        if (el.closest('.story-timeline') && el.classList.contains('story-step')) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= triggerLine && rect.bottom >= vh * 0.03) {
+                markScrollVisible(el);
+            }
+            el.classList.add('is-settled');
+            el.classList.remove('is-floating');
+            el.style.transform = '';
+            return;
+        }
+
+        const rect = el.getBoundingClientRect();
+
+        if (rect.top > triggerLine || rect.bottom < vh * 0.03) {
+            return;
+        }
+
+        markScrollVisible(el);
+
+        const centerY = rect.top + rect.height * 0.5;
+        const dist = centerY - targetY;
+        const floatY = clampScroll(dist * 0.14, -36, 36);
+        const floatX = clampScroll(dist * 0.06, -18, 18);
+        const animType = getScrollAnimType(el);
+        const settled = Math.abs(dist) < settleZone;
+
+        if (settled) {
+            el.classList.add('is-settled');
+            el.classList.remove('is-floating');
+            applyScrollTransform(el, animType, 0, 0, true);
+        } else {
+            el.classList.remove('is-settled');
+            el.classList.add('is-floating');
+            applyScrollTransform(el, animType, floatX, floatY, false);
+        }
+    });
+}
+
+const PAGE_SECTION_IDS = ['home', 'services', 'features', 'story', 'about', 'contact'];
+const pageNavUp = document.getElementById('pageNavUp');
+const pageNavDown = document.getElementById('pageNavDown');
+
+function getNavOffset() {
+    return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 72;
+}
+
+function getPageSections() {
+    return PAGE_SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+}
+
+function getCurrentPageSectionIndex() {
+    const sections = getPageSections();
+    if (!sections.length) return 0;
+
+    const y = window.scrollY + getNavOffset() + 100;
+    let index = 0;
+    sections.forEach((section, i) => {
+        if (section.offsetTop <= y) {
+            index = i;
+        }
+    });
+    return index;
+}
+
+function scrollToPageSection(index) {
+    const sections = getPageSections();
+    const section = sections[index];
+    if (!section) return;
+
+    const top = Math.max(0, section.offsetTop - getNavOffset());
+    window.scrollTo({
+        top,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+    });
+}
+
+function updatePageNavArrows() {
+    if (!pageNavUp || !pageNavDown) return;
+
+    const sections = getPageSections();
+    const index = getCurrentPageSectionIndex();
+    const last = sections.length - 1;
+
+    pageNavUp.disabled = index <= 0;
+    pageNavDown.disabled = index >= last;
+
+    const targets = {
+        up: sections[Math.max(0, index - 1)],
+        down: sections[Math.min(last, index + 1)]
+    };
+
+    pageNavUp.setAttribute('aria-label', targets.up ? `Zu: ${getSectionLabel(targets.up)}` : 'Vorheriger Abschnitt');
+    pageNavDown.setAttribute(
+        'aria-label',
+        targets.down ? `Zu: ${getSectionLabel(targets.down)}` : 'Nächster Abschnitt'
+    );
+}
+
+function getSectionLabel(section) {
+    if (section.id === 'home') return 'Start';
+    const title = section.querySelector('.section-title, .story-title, h2');
+    return title?.textContent?.trim() || section.id || 'Abschnitt';
+}
+
+function initPageNavArrows() {
+    if (!pageNavUp || !pageNavDown) return;
+
+    pageNavUp.addEventListener('click', () => {
+        scrollToPageSection(getCurrentPageSectionIndex() - 1);
+    });
+
+    pageNavDown.addEventListener('click', () => {
+        scrollToPageSection(getCurrentPageSectionIndex() + 1);
+    });
+
+    updatePageNavArrows();
+}
+
+function runScrollEffects() {
+    scrollEffectsTicking = false;
+    updateNavbarTheme();
+    updateHeroStage();
+    updateScrollFloat();
+    updateStoryTimeline();
+    updatePageNavArrows();
+}
+
+function queueScrollEffects() {
+    if (!scrollEffectsTicking) {
+        scrollEffectsTicking = true;
+        requestAnimationFrame(runScrollEffects);
+    }
+}
+
+function initHeroStage() {
+    if (!heroStage || !heroSection) return;
+
+    if (heroContent) {
+        heroContent.style.setProperty('--hero-content-opacity', '0');
+    }
+    updateHeroStage();
+}
+
+window.addEventListener('scroll', queueScrollEffects, { passive: true });
+window.addEventListener('resize', runScrollEffects);
+window.addEventListener('load', () => {
+    initSiteScrollAnimations();
+    initHeroStage();
+    initPageNavArrows();
+    runScrollEffects();
 });
-
-
-// Progressive reveal for story steps
-const storySteps = document.querySelectorAll('.story-step');
-storySteps.forEach((step, index) => {
-    step.style.transitionDelay = `${index * 100}ms`;
-});
-
-console.log('Gosejohann Website loaded successfully! 🚛');
+initSiteScrollAnimations();
+initHeroStage();
+initPageNavArrows();
+updateNavbarTheme();
 
