@@ -1,0 +1,128 @@
+{
+  "results": [
+    {
+      "id": "1. GET /",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "1. GET /index.html",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. asset /styles.css",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. asset /script.js",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. asset /contact-gate.js",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. asset /images/lklw.png",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. asset /fonts/inter-latin-400-normal.woff2",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. asset /fonts/inter-latin-700-normal.woff2",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "8. all CSS-referenced fonts (10)",
+      "pass": true,
+      "detail": "all 200"
+    },
+    {
+      "id": "10. dist HTML has no /M.Gosejohann/",
+      "pass": true,
+      "detail": "confirmed absent"
+    },
+    {
+      "id": "1b. browser open /",
+      "pass": true,
+      "detail": "title=\"Gosejohann GmbH - Fahrzeug- & Karosseriebau\""
+    },
+    {
+      "id": "2. footer Impressum → impressum.html",
+      "pass": true,
+      "detail": "url=http://127.0.0.1:4173/impressum.html status=200"
+    },
+    {
+      "id": "3a. Datenschutz crosslink",
+      "pass": true,
+      "detail": "url=http://127.0.0.1:4173/datenschutz.html status=200"
+    },
+    {
+      "id": "3b. footer Datenschutz",
+      "pass": true,
+      "detail": "url=http://127.0.0.1:4173/datenschutz.html"
+    },
+    {
+      "id": "3c. home footer Datenschutz",
+      "pass": true,
+      "detail": "url=http://127.0.0.1:4173/datenschutz.html"
+    },
+    {
+      "id": "4a. logo → index.html",
+      "pass": true,
+      "detail": "url=http://127.0.0.1:4173/index.html"
+    },
+    {
+      "id": "4b. Zur Startseite CTA → index.html",
+      "pass": true,
+      "detail": "url=http://127.0.0.1:4173/index.html"
+    },
+    {
+      "id": "5. history Start ↔ Impressum ↔ Datenschutz",
+      "pass": true,
+      "detail": "back1=true back2=true(http://127.0.0.1:4173/datenschutz.html→after) fwd1=true fwd2=true"
+    },
+    {
+      "id": "6. nav #services scroll",
+      "pass": true,
+      "detail": "scrollY 0→1188, sectionTop=72.0, navH=89.09375"
+    },
+    {
+      "id": "6. nav #contact scroll",
+      "pass": false,
+      "detail": "scrollY 1188→5897, sectionTop=556.2, navH=89.09375"
+    },
+    {
+      "id": "6. nav #about scroll",
+      "pass": true,
+      "detail": "scrollY 5897→5134, sectionTop=71.5, navH=89.09375"
+    },
+    {
+      "id": "7. direct #contact lands near contact (nav offset)",
+      "pass": true,
+      "detail": "top=72.2 navH=89.09375 scrollY=6381"
+    },
+    {
+      "id": "9. contact gate unlock on impressum",
+      "pass": true,
+      "detail": "state=unlocked revealed=true mailto=1 code=3176"
+    },
+    {
+      "id": "10b. live impressum HTML no /M.Gosejohann/",
+      "pass": true,
+      "detail": "absent"
+    }
+  ],
+  "brokenLinks": [],
+  "failed": [
+    "6. nav #contact scroll"
+  ]
+}

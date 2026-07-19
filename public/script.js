@@ -76,55 +76,83 @@ function updateNavbarTheme() {
 }
 
 // Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+function getNavOffset() {
+    return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 80;
+}
+
+function scrollToHashTarget(hash, behavior = 'smooth') {
+    if (!hash || hash === '#') return false;
+    const target = document.querySelector(hash);
+    if (!target) return false;
+
+    const offsetTop = target.offsetTop - getNavOffset();
+    window.scrollTo({ top: Math.max(0, offsetTop), behavior });
+    return true;
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
+        const hash = this.getAttribute('href');
+        if (!hash || hash === '#') return;
+
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        
-        if (target) {
-            const offsetTop = target.offsetTop - 80;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
+        if (scrollToHashTarget(hash, 'smooth')) {
+            history.pushState(null, '', hash);
         }
     });
 });
 
-// Form submission handler
+// Deep-Links (#section) beim Laden korrekt unter der Navbar positionieren
+window.addEventListener('load', () => {
+    if (location.hash) {
+        scrollToHashTarget(location.hash, 'auto');
+    }
+});
+
+window.addEventListener('hashchange', () => {
+    scrollToHashTarget(location.hash, 'smooth');
+});
+
+// Form submission handler (Formspree)
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
-        
-        // Here you would normally send the data to a server
-        // For now, we'll just show a success message
+
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
-        
+
         submitButton.textContent = 'Wird gesendet...';
         submitButton.disabled = true;
-        
-        // Simulate form submission
-        setTimeout(() => {
+
+        try {
+            const formData = new FormData(contactForm);
+
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { Accept: 'application/json' }
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.error || 'Senden fehlgeschlagen');
+            }
+
             submitButton.textContent = 'Nachricht gesendet! ✓';
             submitButton.style.background = '#4caf50';
-            
-            // Reset form
             contactForm.reset();
-            
-            // Reset button after 3 seconds
-            setTimeout(() => {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-                submitButton.style.background = '';
-            }, 3000);
-        }, 1500);
+        } catch {
+            submitButton.textContent = 'Fehler – bitte erneut versuchen';
+            submitButton.style.background = '#e53935';
+        }
+
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            submitButton.style.background = '';
+        }, 3000);
     });
 }
 
@@ -479,9 +507,7 @@ function updateHeroStage() {
 const SCROLL_ANIM_SELECTORS = [
     { selector: '.section-header', aos: 'fade-up' },
     { selector: '.story-intro', aos: 'fade-up' },
-    { selector: '.story-step', aos: 'fade-up' },
-    { selector: '.footer-section', aos: 'fade-up' },
-    { selector: '.footer-bottom', aos: 'fade-up' }
+    { selector: '.story-step', aos: 'fade-up' }
 ];
 
 const scrollRevealDelays = new WeakMap();
@@ -532,7 +558,7 @@ function applyScrollTransform(el, animType, floatX, floatY, settled) {
     }
 }
 
-const STATIC_SCROLL_SECTIONS = ['#features', '#about', '#contact'];
+const STATIC_SCROLL_SECTIONS = ['#features', '#about', '#contact', '#footer'];
 
 function initStaticSectionContent() {
     STATIC_SCROLL_SECTIONS.forEach((sectionId) => {

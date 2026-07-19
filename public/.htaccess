@@ -1,0 +1,6 @@
+# Strato / Apache – Index und Trailing-Slash
+DirectoryIndex index.html
+
+<IfModule mod_dir.c>
+    DirectorySlash On
+</IfModule>

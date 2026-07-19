@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gosejohann GmbH - Fahrzeug- & Karosseriebau. Ihr Full-Service-Fahrzeugbauer für Reparaturen, Neubau, Sandstrahlen und Lackierung.">
     <title>Gosejohann GmbH - Fahrzeug- & Karosseriebau</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -233,7 +230,7 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="features">
+    <section id="features" class="features" data-credit-contrast="dark">
         <div class="container">
             <div class="features-grid">
                 <div class="feature-item">
@@ -395,7 +392,7 @@
             <div class="about-split__panel about-split__panel--media">
                 <div class="about-split__media-fixed">
                     <div class="about-split__image-cut">
-                        <img src="/images/lklw.png" alt="LKW der Gosejohann GmbH" class="about-split__image" width="800" height="600" decoding="async">
+                        <img src="./images/lklw.png" alt="LKW der Gosejohann GmbH" class="about-split__image" width="800" height="600" decoding="async">
                     </div>
                 </div>
             </div>
@@ -459,7 +456,7 @@
                 </div>
                 
                 <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contactForm">
+                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xwvgpwrw" method="POST">
                         <div class="form-group">
                             <label for="name">Name *</label>
                             <input type="text" id="name" name="name" required>
@@ -480,6 +477,12 @@
                             <label for="message">Nachricht *</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
+                        <div class="form-group form-group--consent">
+                            <label class="consent-label" for="privacyConsent">
+                                <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
+                                <span>Ich habe die <a href="./datenschutz.html">Datenschutzerklärung</a> zur Kenntnis genommen und willige in die Verarbeitung meiner Angaben zur Bearbeitung dieser Anfrage ein. *</span>
+                            </label>
+                        </div>
                         <button type="submit" class="btn btn-primary">Nachricht senden</button>
                     </form>
                 </div>
@@ -488,7 +491,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -511,8 +514,13 @@
                     <p>Tel: +49 (0) 52 44 / 7 78 18</p>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="footer-bottom footer-bottom--legal">
                 <p>&copy; 2026 Gosejohann GmbH. Alle Rechte vorbehalten.</p>
+                <p class="footer-legal-links">
+                    <a href="./impressum.html">Impressum</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="./datenschutz.html">Datenschutz</a>
+                </p>
             </div>
         </div>
     </footer>
@@ -526,7 +534,12 @@
         </button>
     </nav>
 
-    <script src="/script.js"></script>
+    <p class="site-credit">
+        made by <a href="https://itme-solutions.de" target="_blank" rel="noopener noreferrer">itme-solutions.de</a>
+    </p>
+
+    <script src="./script.js"></script>
+    <script src="./site-credit.js"></script>
 </body>
 </html>
 
