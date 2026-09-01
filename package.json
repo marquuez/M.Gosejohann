@@ -1,7 +1,7 @@
 {
   "name": "gosejohann-website",
   "version": "1.0.0",
-  "description": "Gosejohann GmbH - Fahrzeug- & Karosseriebau Website",
+  "description": "Fahrzeugbau M. Gosejohann GmbH - Fahrzeug- & Karosseriebau Website",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -245,21 +245,14 @@ async function main() {
     `top=${hashLand.top.toFixed(1)} navH=${hashLand.navH} scrollY=${hashLand.scrollY}`
   );
 
-  // --- Check 9: contact gate unlock ---
+  // --- Check 9: impressum shows owner contact openly ---
   await page.goto(BASE + '/impressum.html', { waitUntil: 'networkidle' });
-  const gate = page.locator('[data-contact-gate="impressum-full"] .contact-gate').first();
-  await gate.locator('.contact-gate__start').click();
-  const code = await gate.locator('.contact-gate__code').textContent();
-  await gate.locator('.contact-gate__input').fill(code.trim());
-  await gate.locator('form.contact-gate__form button[type="submit"]').click();
-  await page.waitForTimeout(200);
-  const unlocked = await gate.getAttribute('data-state');
-  const revealed = await gate.locator('.contact-gate__result').isVisible();
-  const hasEmail = await gate.locator('.contact-gate__result a[href^="mailto:"]').count();
+  const hasEmail = await page.locator('a[href^="mailto:info@fahrzeugbau-m-gosejohann.com"]').count();
+  const hasGate = await page.locator('[data-contact-gate]').count();
   record(
-    '9. contact gate unlock on impressum',
-    unlocked === 'unlocked' && revealed && hasEmail > 0,
-    `state=${unlocked} revealed=${revealed} mailto=${hasEmail} code=${code}`
+    '9. impressum shows owner contact openly',
+    hasEmail > 0 && hasGate === 0,
+    `mailto=${hasEmail} gates=${hasGate}`
   );
 
   // Extra: ensure no runtime navigation to /M.Gosejohann/

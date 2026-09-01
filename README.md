@@ -1,6 +1,6 @@
-# Gosejohann GmbH - Website
+# Fahrzeugbau M. Gosejohann GmbH - Website
 
-Moderne, responsive Website für Gosejohann GmbH - Fahrzeug- & Karosseriebau.
+Moderne, responsive Website für Fahrzeugbau M. Gosejohann GmbH - Fahrzeug- & Karosseriebau.
 
 ## Features
 
@@ -115,5 +115,5 @@ Das Kontaktformular ist aktuell für Frontend-Demo konfiguriert. Für Produktion
 
 ## Lizenz
 
-© 2026 Gosejohann GmbH. Alle Rechte vorbehalten.
+© 2026 Fahrzeugbau M. Gosejohann GmbH. Alle Rechte vorbehalten.
 

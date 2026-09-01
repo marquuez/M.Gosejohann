@@ -9,7 +9,7 @@
     if (!GATES.length) return;
 
     const ENCODED =
-        'eyJjb21wYW55IjoiRmFocnpldWdiYXUgTS4gR29zZWpvaGFubiBHbWJIIiwic3RyZWV0IjoiSW5kdXN0cmllc3RyYcOfZSAyMiIsInppcCI6IjMzMzk3IiwiY2l0eSI6IlJpZXRiZXJnIiwiY291bnRyeSI6IkRldXRzY2hsYW5kIiwicGhvbmUiOiIrNDkgKDApIDUyIDQ0IC8gNyA3OCAxOCIsInBob25lVGVsIjoiKzQ5NTI0NDc3ODE4IiwibW9iaWxlIjoiKzQ5ICgwKSAxNyAxIC8gOCA1MSA0OSA2MyIsIm1vYmlsZVRlbCI6Iis0OTE3MTg1MTQ5NjMiLCJmYXgiOiIrNDkgKDApIDUyIDQ0IC8gNyA4NSAyOSIsImVtYWlsIjoiaW5mb0BmYWhyemV1Z2JhdS1tLWdvc2Vqb2hhbm4uY29tIiwiZGlyZWN0b3IiOiJNYXR0aGlhcyBHb3Nlam9oYW5uIiwiYWdlbmN5Ijp7Im5hbWUiOiJJVE1FLVNvbHV0aW9ucywgSW5oLiBNYXJjIFNjaHVsZW5iZXJnIiwiY2l0eSI6IlJpZXRiZXJnIiwiY291bnRyeSI6IkRldXRzY2hsYW5kIiwicGhvbmUiOiIrNDkgKDApIDUyIDQ0IC8gOTYwIDk5IDkyIiwicGhvbmVUZWwiOiIrNDk1MjQ0OTYwOTk5MiIsImVtYWlsIjoiaW5mb0BpdG1lLXNvbHV0aW9ucy5kZSIsIndlYiI6Imh0dHBzOi8vaXRtZS1zb2x1dGlvbnMuZGUiLCJ3ZWJMYWJlbCI6Iml0bWUtc29sdXRpb25zLmRlIn19';
+        'eyJjb21wYW55IjoiRmFocnpldWdiYXUgTS4gR29zZWpvaGFubiBHbWJIIiwic3RyZWV0IjoiSW5kdXN0cmllc3RyYcOfZSAyMiIsInppcCI6IjMzMzk3IiwiY2l0eSI6IlJpZXRiZXJnIiwiY291bnRyeSI6IkRldXRzY2hsYW5kIiwicGhvbmUiOiIrNDkgKDApIDUyIDQ0IC8gNyA3OCAxOCIsInBob25lVGVsIjoiKzQ5NTI0NDc3ODE4IiwiZmF4IjoiKzQ5ICgwKSA1MiA0NCAvIDcgODUgMjkiLCJlbWFpbCI6ImluZm9AZmFocnpldWdiYXUtbS1nb3Nlam9oYW5uLmNvbSIsImRpcmVjdG9yIjoiTWF0dGhpYXMgR29zZWpvaGFubiIsImFnZW5jeSI6eyJuYW1lIjoiSVRNRS1Tb2x1dGlvbnMiLCJlbWFpbCI6ImluZm9AaXRtZS1zb2x1dGlvbnMuZGUiLCJ3ZWIiOiJodHRwczovL2l0bWUtc29sdXRpb25zLmRlIiwid2ViTGFiZWwiOiJ3d3cuaXRtZS1zb2x1dGlvbnMuZGUifX0=';
 
     function decodePayload() {
         const binary = atob(ENCODED);
@@ -40,7 +40,6 @@
                 </p>
                 <p>
                     Telefon: <a href="tel:${escapeHtml(data.phoneTel)}">${escapeHtml(data.phone)}</a><br>
-                    Mobil: <a href="tel:${escapeHtml(data.mobileTel)}">${escapeHtml(data.mobile)}</a><br>
                     Fax: ${escapeHtml(data.fax)}<br>
                     E-Mail: <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a>
                 </p>
@@ -62,7 +61,6 @@
                 <h2>Kontakt</h2>
                 <p>
                     Telefon: <a href="tel:${escapeHtml(data.phoneTel)}">${escapeHtml(data.phone)}</a><br>
-                    Mobil: <a href="tel:${escapeHtml(data.mobileTel)}">${escapeHtml(data.mobile)}</a><br>
                     Fax: ${escapeHtml(data.fax)}<br>
                     E-Mail: <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a>
                 </p>
@@ -84,12 +82,8 @@
             return `
                 <p>
                     <strong>${escapeHtml(agency.name)}</strong><br>
-                    ${escapeHtml(agency.city)}, ${escapeHtml(agency.country)}
-                </p>
-                <p>
-                    Telefon: <a href="tel:${escapeHtml(agency.phoneTel)}">${escapeHtml(agency.phone)}</a><br>
-                    E-Mail: <a href="mailto:${escapeHtml(agency.email)}">${escapeHtml(agency.email)}</a><br>
-                    Internet: <a href="${escapeHtml(agency.web)}" target="_blank" rel="noopener noreferrer">${escapeHtml(agency.webLabel)}</a>
+                    <a href="mailto:${escapeHtml(agency.email)}">${escapeHtml(agency.email)}</a><br>
+                    <a href="${escapeHtml(agency.web)}" target="_blank" rel="noopener noreferrer">${escapeHtml(agency.webLabel)}</a>
                 </p>
             `;
         }
